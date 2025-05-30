@@ -37,3 +37,11 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
         
         welcome_text = "Welcome!"
         self.animate_text(self.welcome_label, welcome_text)
+
+ def animate_text(self, widget, text):
+        for i in range(len(text) + 1):
+            widget.configure(text=text[:i])
+            self.root.update()
+            time.sleep(0.1)
+        
+        ttk.Button(self.welcome_frame, text="Lanjutkan", command=self.show_team_page, style="TButton").pack(pady=20)
