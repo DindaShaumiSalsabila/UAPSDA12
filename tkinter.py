@@ -8,7 +8,7 @@ class WelcomeApp:
         self.root.title("Welcome & Perkenalan Kelompok")
         self.root.geometry("800x600") 
         self.root.configure(bg="#FFFFFF")
-self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
+        self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
         self.subheader_font = font.Font(family="Helvetica", size=16)
         self.card_font = font.Font(family="Helvetica", size=16)
         self.name_font = font.Font(family="Helvetica", size=14)
@@ -25,7 +25,7 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
     def show_welcome_page(self):
         for widget in self.root.winfo_children():
             widget.destroy()
- self.welcome_frame = tk.Frame(self.root, bg="#FFFFFF")
+        self.welcome_frame = tk.Frame(self.root, bg="#FFFFFF")
         self.welcome_frame.pack(expand=True, fill="both")
         
         self.welcome_label = tk.Label(self.welcome_frame, text="", font=self.header_font,
@@ -38,14 +38,15 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
         welcome_text = "Welcome!"
         self.animate_text(self.welcome_label, welcome_text)
 
- def animate_text(self, widget, text):
+    def animate_text(self, widget, text):
         for i in range(len(text) + 1):
             widget.configure(text=text[:i])
             self.root.update()
             time.sleep(0.1)
         
         ttk.Button(self.welcome_frame, text="Lanjutkan", command=self.show_team_page, style="TButton").pack(pady=20)
- def show_team_page(self):
+     
+    def show_team_page(self):
         for widget in self.root.winfo_children():
             widget.destroy()
         
@@ -74,7 +75,8 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
             self.create_member_card(members_frame, member["name"], member["role"], row, col)
         
         ttk.Button(team_frame, text="Lanjutkan ke Projek", command=self.show_project_selection, style="TButton").pack(pady=20)
-   def create_member_card(self, parent, name, role, row, col):
+     
+    def create_member_card(self, parent, name, role, row, col):
         card_frame = tk.Frame(parent, bg="#FF75DC", bd=2, relief="raised")
         card_frame.grid(row=row, column=col, padx=15, pady=15, sticky="nsew")
         
@@ -93,5 +95,15 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
         
         for widget in card_frame.winfo_children():
             widget.bind("<Enter>", lambda e: card_frame.configure(bg="#FF75DC"))
-            widget.bind("<Leave>", lambda e: card_frame.configure(bg="#FF75DC"))   
+            widget.bind("<Leave>", lambda e: card_frame.configure(bg="#FF75DC"))  
+
+    def show_project_selection(self):
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        
+        project_frame = tk.Frame(self.root, bg="#FFFFFF")
+        project_frame.pack(expand=True, fill="both")
+        
+        tk.Label(project_frame, text="Pilih Projek", font=self.header_font,
+                 fg="#FF75DC", bg="#FFFFFF").pack(pady=20)
 
