@@ -25,3 +25,15 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
     def show_welcome_page(self):
         for widget in self.root.winfo_children():
             widget.destroy()
+ self.welcome_frame = tk.Frame(self.root, bg="#FFFFFF")
+        self.welcome_frame.pack(expand=True, fill="both")
+        
+        self.welcome_label = tk.Label(self.welcome_frame, text="", font=self.header_font,
+                                      fg="#FF75DC", bg="#FFFFFF")
+        self.welcome_label.pack(pady=50)
+        
+        tk.Label(self.welcome_frame, text="Selamat datang di presentasi kami!",
+                 font=self.subheader_font, fg="#FF75DC", bg="#FFFFFF").pack(pady=20)
+        
+        welcome_text = "Welcome!"
+        self.animate_text(self.welcome_label, welcome_text)
