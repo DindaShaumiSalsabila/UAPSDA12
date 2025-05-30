@@ -45,3 +45,33 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
             time.sleep(0.1)
         
         ttk.Button(self.welcome_frame, text="Lanjutkan", command=self.show_team_page, style="TButton").pack(pady=20)
+def show_team_page(self):
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        
+        team_frame = tk.Frame(self.root, bg="#FFFFFF")
+        team_frame.pack(expand=True, fill="both")
+        
+        tk.Label(team_frame, text="Perkenalan Kelompok", font=self.header_font,
+                 fg="#FF75DC", bg="#FFFFFF").pack(pady=20)
+        
+        members_frame = tk.Frame(team_frame, bg="#FFFFFF")
+        members_frame.pack(expand=True, fill="both", padx=20, pady=0)
+        
+        members_frame.grid_columnconfigure(0, weight=1)
+        members_frame.grid_columnconfigure(1, weight=1)
+        
+        members = [
+            {"name": "Faqih Lakaisha .P.", "role": "2417051037"},
+            {"name": "Herdi Irawan", "role": "2417051040"},
+            {"name": "Dinda Shaumi .S.", "role": "2417051033"},
+            {"name": "Annisa Syifa .H.", "role": "2417051019"}
+        ]
+        
+        for i, member in enumerate(members):
+            row = i // 2
+            col = i % 2
+            self.create_member_card(members_frame, member["name"], member["role"], row, col)
+        
+        ttk.Button(team_frame, text="Lanjutkan ke Projek", command=self.show_project_selection, style="TButton").pack(pady=20)
+
