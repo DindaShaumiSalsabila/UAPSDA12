@@ -45,7 +45,7 @@ self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
             time.sleep(0.1)
         
         ttk.Button(self.welcome_frame, text="Lanjutkan", command=self.show_team_page, style="TButton").pack(pady=20)
-def show_team_page(self):
+ def show_team_page(self):
         for widget in self.root.winfo_children():
             widget.destroy()
         
@@ -74,4 +74,24 @@ def show_team_page(self):
             self.create_member_card(members_frame, member["name"], member["role"], row, col)
         
         ttk.Button(team_frame, text="Lanjutkan ke Projek", command=self.show_project_selection, style="TButton").pack(pady=20)
+   def create_member_card(self, parent, name, role, row, col):
+        card_frame = tk.Frame(parent, bg="#FF75DC", bd=2, relief="raised")
+        card_frame.grid(row=row, column=col, padx=15, pady=15, sticky="nsew")
+        
+        photo_label = tk.Label(card_frame, text="[Foto Anggota]", font=self.card_font,
+                               fg="#ffffff", bg="#FF75DC")
+        photo_label.pack(pady=15, expand=True, fill="both")
+        
+        tk.Label(card_frame, text=name, font=self.name_font,
+                 fg="#ffffff", bg="#FF75DC").pack()
+        
+        tk.Label(card_frame, text=role, font=self.subheader_font,
+                 fg="#bfdbfe", bg="#FF75DC").pack(pady=10)
+        
+        card_frame.bind("<Enter>", lambda e: card_frame.configure(bg="#FF75DC"))
+        card_frame.bind("<Leave>", lambda e: card_frame.configure(bg="#FF75DC"))
+        
+        for widget in card_frame.winfo_children():
+            widget.bind("<Enter>", lambda e: card_frame.configure(bg="#FF75DC"))
+            widget.bind("<Leave>", lambda e: card_frame.configure(bg="#FF75DC"))   
 
