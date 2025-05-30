@@ -3,11 +3,12 @@ from tkinter import ttk, font
 import time
 
 class WelcomeApp:
-    def _init_(self, root):
-        self.root = root
-        self.root.title("Welcome & Perkenalan Kelompok")
-        self.root.geometry("800x600") 
-        self.root.configure(bg="#FFFFFF")
+   def __init__(self, root):
+       self.root = root
+       self.root.title("Welcome & Perkenalan Kelompok")
+       self.root.geometri("800x600")
+       self.root.configure(bg="#FFFFFF")
+        
         self.header_font = font.Font(family="Helvetica", size=36, weight="bold")
         self.subheader_font = font.Font(family="Helvetica", size=16)
         self.card_font = font.Font(family="Helvetica", size=16)
@@ -16,12 +17,17 @@ class WelcomeApp:
         
         style = ttk.Style()
         style.configure("TButton", font=self.button_font, padding=10, background="")
-        style.map("TButton",background=[('active', "#FF75DC"), ('!active', '#FF75DC')],foreground=[('active', '#000000'), ('!active', '#000000')])
-        self.show_welcome_page()
+        style.map("TButton",
+                  background=[('active', "#FF75DC"), ('!active', '#FF75DC')],
+                  foreground=[('active', '#000000'), ('!active', '#000000')])
+       
+       self.show_welcome_page()
 
     def show_welcome_page(self):
         for widget in self.root.winfo_children():
             widget.destroy()
+
+    
         self.welcome_frame = tk.Frame(self.root, bg="#FFFFFF")
         self.welcome_frame.pack(expand=True, fill="both")
         self.welcome_label = tk.Label(self.welcome_frame, text="", font=self.header_font,fg="#FF75DC", bg="#FFFFFF")
@@ -41,6 +47,7 @@ class WelcomeApp:
     def show_team_page(self):
         for widget in self.root.winfo_children():
             widget.destroy()
+            
         team_frame = tk.Frame(self.root, bg="#FFFFFF")
         team_frame.pack(expand=True, fill="both")
         tk.Label(team_frame, text="Perkenalan Kelompok", font=self.header_font,fg="#FF75DC", bg="#FFFFFF").pack(pady=20)
@@ -80,12 +87,25 @@ class WelcomeApp:
     def show_project_selection(self):
         for widget in self.root.winfo_children():
             widget.destroy()
+            
         project_frame = tk.Frame(self.root, bg="#FFFFFF")
         project_frame.pack(expand=True, fill="both")
         tk.Label(project_frame, text="Pilih Projek", font=self.header_font,fg="#FF75DC", bg="#FFFFFF").pack(pady=20)
         tk.Label(project_frame, text="Pilih Projek", font=self.header_font,fg="#FF75DC", bg="#FFFFFF").pack(pady=20)
         tk.Label(project_frame, text="Silakan pilih salah satu projek untuk melanjutkan:",font=self.subheader_font, fg="#FF75DC", bg="#FFFFFF").pack(pady=10)
-        ttk.Button(project_frame, text="Projek Timer", command=self.show_timer_gui, style="TButton").pack(pady=10)
-        ttk.Button(project_frame, text="Projek Materi", command=self.show_materi_gui, style="TButton").pack(pady=10)
+
+        ttk.Button(project_frame, text="Project Timer", command=self.show_timer_gui, style="TButton").pack(pady=10)
+        ttk.Button(project_frame, text="Project Materi", command=self.show_Materi_gui, style="TButton").pack(pady=10)
         ttk.Button(project_frame, text="Kembali", command=self.show_team_page, style="TButton").pack(pady=20)
+
+    def show_timer_gui(self):
+        tk.messagebox.showinfo("Project Timer", "Fitur Timer belum tersedia.")
+
+    def show_materi_gui(self):
+        tk.messagebox.showinfo("Project Materi", "Fitur Materi belum tersedia.")
+        
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = WelcomeApp(root)
+    root.mainloop()
 
