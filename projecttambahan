@@ -1,1 +1,18 @@
+import csv
+import tkinter as tk
+from tkinter import messagebox, filedialog
 
+class PesertaKarate:
+    def _init_(self, id: str, nama: str):
+        self.id = id
+        self.nama = nama
+        self.skor = 0  # Single cumulative score
+
+    def tambah_skor(self, nilai: int):
+        self.skor += nilai  # Add to existing score
+
+    def skor_tertinggi(self) -> int:
+        return self.skor  # Return the cumulative score
+
+    def rata_skor(self) -> float:
+        return self.skor  # Same as skor_tertinggi since there's only one score
