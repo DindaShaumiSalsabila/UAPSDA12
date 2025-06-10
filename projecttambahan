@@ -80,3 +80,16 @@ class SistemScoringKarate:
                     peserta.nama,
                     peserta.skor
                 ])
+class AplikasiKarate(tk.Tk):
+    def _init_(self):
+        super()._init_()
+        self.sistem = SistemScoringKarate()
+        self.title("Sistem Scoring Karate - GUI Fullscreen")
+        self.state('zoomed')
+        self.configure(bg="#2e003e")
+
+        self.warna_utama = "#FF75DC"
+        self.warna_bg_list = "#FFB3E6"
+
+        self.create_widgets()
+
