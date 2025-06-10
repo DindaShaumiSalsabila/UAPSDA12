@@ -93,3 +93,47 @@ class AplikasiKarate(tk.Tk):
 
         self.create_widgets()
 
+def create_widgets(self):
+        header = tk.Label(self, text="=== SISTEM SCORING KARATE ===", font=("Arial", 24, "bold"), bg="#2e003e", fg=self.warna_utama)
+        header.pack(pady=20)
+
+        btn_style = {"width": 30, "height": 2, "font": ("Arial", 14, "bold"), "bg": self.warna_utama, "fg": "white", "activebackground": "#cc61bf"}
+
+        frame_main = tk.Frame(self, bg="#2e003e")
+        frame_main.pack(fill=tk.BOTH, expand=True)
+
+        frame_kiri = tk.Frame(frame_main, bg="#2e003e", width=self.winfo_screenwidth()//2)
+        frame_kiri.pack(side=tk.LEFT, fill=tk.Y, padx=(20,10), pady=10)
+        frame_kiri.pack_propagate(False)
+
+ tk.Button(frame_kiri, text="1. Daftarkan Peserta", command=self.daftar_peserta_gui, **btn_style).pack(pady=10)
+        tk.Button(frame_kiri, text="2. Tambahkan Skor", command=self.tambah_skor_gui, **btn_style).pack(pady=10)
+        tk.Button(frame_kiri, text="3. Impor Data dari CSV", command=self.import_csv_gui, **btn_style).pack(pady=10)
+        tk.Button(frame_kiri, text="4. Ekspor Data ke CSV", command=self.ekspor_csv_gui, **btn_style).pack(pady=10)
+        tk.Button(frame_kiri, text="Urutkan Peserta Berdasarkan Skor", command=self.urutkan_skor, **btn_style).pack(pady=10)
+        tk.Button(frame_kiri, text="Urutkan Peserta Berdasarkan ID", command=self.urutkan_id, **btn_style).pack(pady=10)
+        tk.Button(frame_kiri, text="0. Keluar", command=self.destroy, *{*btn_style, "bg": "#d3004e", "activebackground": "#9a0038"}).pack(pady=10)
+
+        self.frame_kanan = tk.Frame(frame_main, bg="#ffb3e6", width=self.winfo_screenwidth()//2)
+        self.frame_kanan.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(10,20), pady=10)
+        self.frame_kanan.pack_propagate(False)
+
+        self.canvas = tk.Canvas(self.frame_kanan, bg="#ffb3e6", highlightthickness=0)
+        self.scrollbar = tk.Scrollbar(self.frame_kanan, orient=tk.VERTICAL, command=self.canvas.yview)
+        self.scrollable_frame = tk.Frame(self.canvas, bg="#ffb3e6")
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(
+                scrollregion=self.canvas.bbox("all")
+            )
+        )
+
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.update_list_peserta()
+
