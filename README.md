@@ -18,7 +18,7 @@ WelcomeApp adalah aplikasi GUI berbasis Python yang dibuat menggunakan pustaka t
    - Data Rank Peserta
    - Keluar Aplikasi
 
-**Kelompok 4**
+**Kelompok 12**
 - Faqih Lakaisha P. (2417051037)
 - Herdi Irawan (2417051040)
 - Dinda Shaumi S. (2417051033)
