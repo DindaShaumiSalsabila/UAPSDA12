@@ -143,3 +143,81 @@ def animate(self, label, text, button_frame):
         frame.pack(expand=True, fill="both", padx=20, pady=20)
 
         tk.Label(frame, text="Developer", font=self.hfont, fg=ACCENT, bg=BG).pack(pady=20)
+
+  grid = tk.Frame(frame, bg=BG)
+        grid.pack(expand=True, fill="both")
+        grid.grid_columnconfigure((0, 1), weight=1)
+
+        members = [
+            {"name": "Faqih Lakaisha .P.", "role": "2417051037", "key": "Faqih"},
+            {"name": "Herdi Irawan", "role": "2417051040", "key": "Herdi"},
+            {"name": "Dinda Shaumi .S.", "role": "2417051033", "key": "Dinda"},
+            {"name": "Annisa Syifa .H.", "role": "2417051019", "key": "Nisa"}
+        ]
+
+        for i, m in enumerate(members):
+            row = i // 2
+            col = i % 2
+            card = tk.Frame(grid, bg=ACCENT, bd=2, relief="raised", height=180)
+            card.grid(row=row, column=col, padx=20, pady=20, sticky="nsew")
+            card.grid_propagate(False)
+
+            left_info = tk.Frame(card, bg=ACCENT)
+            left_info.pack(side="left", fill="both", expand=True, padx=(10, 5), pady=10)
+
+            tk.Label(left_info, text=m["name"], font=("Helvetica", 14, "bold"), fg=WHITE, bg=ACCENT, anchor="w").pack(anchor="w", pady=(10, 0))
+            tk.Label(left_info, text=m["role"], font=("Helvetica", 12), fg="#bfdbfe", bg=ACCENT, anchor="w").pack(anchor="w", pady=(5, 0))
+
+            right_photo = tk.Frame(card, bg=ACCENT, width=150)
+            right_photo.pack(side="right", fill="both", pady=0)
+
+            photo = self.photos.get(m["key"])
+            if photo:
+                tk.Label(right_photo, image=photo, bg=ACCENT).pack(expand=True, fill="both")
+            else:
+                tk.Label(right_photo, text="[Foto]", bg=ACCENT, fg=WHITE, font=("Helvetica", 16)).pack(expand=True, fill="both")
+
+        style = ttk.Style()
+        style.configure("Big.TButton",
+            font=("Helvetica", 20, "bold"),
+            padding=15,
+            background=ACCENT,
+            foreground=TEXT)
+        style.map("Big.TButton",
+            foreground=[('active', TEXT)],
+            background=[('active', "#c71d7b")])
+
+        ttk.Button(frame, text="Selanjutnya", command=self.show_menu, style="Big.TButton").pack(pady=30, fill="x", padx=50)
+
+    def show_menu(self):
+        self.clear()
+        frame = tk.Frame(self.root, bg=BG)
+        frame.pack(expand=True, fill="both", padx=20, pady=20)
+
+        tk.Label(frame, text="Pilih Program", font=self.hfont, fg=ACCENT, bg=BG).pack(pady=20)
+        tk.Label(frame, text="Silakan pilih salah satu program untuk melanjutkan:", font=self.sfont, fg=ACCENT, bg=BG).pack(pady=10)
+
+        style = ttk.Style()
+        style.configure("Big2.TButton",
+            font=("Helvetica", 20, "bold"),
+            padding=15,
+            background=ACCENT,
+            foreground=TEXT)
+        style.map("Big2.TButton",
+            foreground=[('active', TEXT)],
+            background=[('active', "#f3acd2")])
+
+        ttk.Button(frame, text="Timer Pertandingan", command=lambda: self.run_script("scoreboard.py"), style="Big2.TButton").pack(pady=10, fill="x")
+        ttk.Button(frame, text="Data Rank Peserta", command=lambda: self.run_script("protambah.py"), style="Big2.TButton").pack(pady=10, fill="x")
+        ttk.Button(frame, text="Kembali", command=self.root.quit, style="Big2.TButton").pack(pady=30, fill="x")
+
+    def run_script(self, script):
+        try:
+            subprocess.Popen(["python", script])
+        except Exception as e:
+            print("Error:", e)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = WelcomeApp(root)
+    root.mainloop()
