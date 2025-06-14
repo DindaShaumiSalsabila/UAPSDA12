@@ -84,3 +84,82 @@ btn_frame = tk.Frame(score_frame, bg=color)
             self.aka_score_label = score_label
             self.aka_timer_label = timer_label
             self.aka_note_label = note_label
+
+
+       control_frame = tk.Frame(frame, bg=color)
+        control_frame.pack(side="bottom", pady=10)
+        tk.Button(control_frame, text="Start", font=("Arial", 16), bg="green", fg="white", width=10,
+                  command=lambda: self.start_timer(team)).pack(side="left", padx=5)
+        tk.Button(control_frame, text="Stop", font=("Arial", 16), bg="orange", fg="white", width=10,
+                  command=lambda: self.stop_timer(team)).pack(side="left", padx=5)
+        tk.Button(control_frame, text="Shikkaku", font=("Arial", 16), bg="gray", fg="black", width=10,
+                  command=lambda: self.shikkaku(team)).pack(side="left", padx=5)
+        tk.Button(control_frame, text="Kikken", font=("Arial", 16), bg="gray", fg="black", width=10,
+                  command=lambda: self.kikken(team)).pack(side="left", padx=5)
+
+    def change_score(self, team, delta):
+        if team == "ao":
+            self.ao_score = max(0, self.ao_score + delta)
+            self.ao_score_label.config(text=str(self.ao_score))
+        else:
+            self.aka_score = max(0, self.aka_score + delta)
+            self.aka_score_label.config(text=str(self.aka_score))
+
+    def start_timer(self, team):
+        if team == "ao" and not self.running_ao:
+            self.running_ao = True
+            self.update_timer('ao')
+        elif team == "aka" and not self.running_aka:
+            self.running_aka = True
+            self.update_timer('aka')
+
+    def stop_timer(self, team):
+        if team == "ao":
+            self.running_ao = False
+        else:
+            self.running_aka = False
+
+    def update_timer(self, team):
+        if team == "ao" and self.running_ao:
+            self.ao_timer += 1
+            mins, secs = divmod(self.ao_timer, 60)
+            self.ao_timer_label.config(text=f"{mins}:{secs:02}")
+            self.root.after(1000, lambda: self.update_timer('ao'))
+        elif team == "aka" and self.running_aka:
+            self.aka_timer += 1
+            mins, secs = divmod(self.aka_timer, 60)
+            self.aka_timer_label.config(text=f"{mins}:{secs:02}")
+            self.root.after(1000, lambda: self.update_timer('aka'))
+
+    def reset_all(self):
+        self.ao_score = 0
+        self.aka_score = 0
+        self.ao_timer = 0
+        self.aka_timer = 0
+        self.running_ao = False
+        self.running_aka = False
+        self.ao_score_label.config(text="0")
+        self.aka_score_label.config(text="0")
+        self.ao_timer_label.config(text="0:00")
+        self.aka_timer_label.config(text="0:00")
+        self.ao_note_label.config(text="")
+        self.aka_note_label.config(text="")
+
+    def shikkaku(self, team):
+        self.stop_timer(team)
+        if team == "ao":
+            self.ao_note_label.config(text="DISQ")
+        else:
+            self.aka_note_label.config(text="DISQ")
+
+    def kikken(self, team):
+        self.stop_timer(team)
+        if team == "ao":
+            self.ao_note_label.config(text="FORF")
+        else:
+            self.aka_note_label.config(text="FORF")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = KarateScoreboard(root)
+    root.mainloop()
