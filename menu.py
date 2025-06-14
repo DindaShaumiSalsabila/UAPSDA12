@@ -95,3 +95,51 @@ class WelcomeApp:
             style.configure("Login.TButton", font=("Helvetica", 12, "bold"), padding=(10, 5), foreground=ACCENT, background=WHITE, borderwidth=0) style.map("Login.TButton", background=[('active', "#fcd7e8")], foreground=[('active', ACCENT)])
             ttk.Button(form_frame, text="Login", command=check_login, style="Login.TButton").pack(pady=10)
 
+
+def animate(self, label, text, button_frame):
+        def run(i=0):
+            if i <= len(text):
+                label.config(text=text[:i])
+                self.root.after(40, lambda: run(i+1))
+            else:
+                style = ttk.Style()
+                style.configure("Huge.TButton",
+                    font=("Helvetica", 28, "bold"),
+                    padding=(30, 20),
+                    background=ACCENT,
+                    foreground=TEXT)
+                style.map("Huge.TButton",
+                    background=[('active', "#c71d7b")],
+                    foreground=[('active', TEXT)])
+                
+                ttk.Button(button_frame, text="Selanjutnya", command=self.show_team, style="Huge.TButton").pack(
+                    pady=30, fill="x", padx=100
+                )
+        run()
+
+    def show_welcome(self):
+        self.clear()
+        frame = tk.Frame(self.root, bg=BG)
+        frame.pack(expand=True, fill="both", padx=20, pady=20)
+
+        lbl_title = tk.Label(frame, text="", font=self.hfont, fg=ACCENT, bg=BG)
+        lbl_title.pack(pady=15)
+
+        self.animate(lbl_title, "Selamat datang di Program Kami", frame)
+
+        try:
+            screen_width = self.root.winfo_screenwidth()
+            img_path = os.path.join("gambar", "gambarkelompok.png")
+            img_kel = Image.open(img_path).resize((screen_width - 100, 380))
+            self.img_kelompok = ImageTk.PhotoImage(img_kel)
+            lbl_img = tk.Label(frame, image=self.img_kelompok, bg=BG)
+            lbl_img.pack(pady=(30, 20))
+        except:
+            tk.Label(frame, text="[Gambar Kelompok Tidak Ditemukan]", font=self.sfont, fg="red", bg=BG).pack(pady=20)
+
+    def show_team(self):
+        self.clear()
+        frame = tk.Frame(self.root, bg=BG)
+        frame.pack(expand=True, fill="both", padx=20, pady=20)
+
+        tk.Label(frame, text="Developer", font=self.hfont, fg=ACCENT, bg=BG).pack(pady=20)
