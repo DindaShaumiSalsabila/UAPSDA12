@@ -138,3 +138,65 @@ class AplikasiKarate(tk.Tk):
 
         self.update_list_peserta()
 
+def update_list_peserta(self, daftar=None):
+        print("Debug: Updating participant list")
+        for widget in self.scrollable_frame.winfo_children():
+            widget.destroy()
+
+        if daftar is None:
+            daftar = list(self.sistem.peserta.values())
+
+        header_frame = tk.Frame(self.scrollable_frame, bg="#2e003e", pady=10)
+        header_frame.pack(fill=tk.X, padx=10)
+        
+        tk.Label(header_frame, text="No", font=("Arial", 14, "bold"), bg="#2e003e", fg=self.warna_utama, width=5).pack(side=tk.LEFT, padx=5)
+        tk.Label(header_frame, text="Nama", font=("Arial", 14, "bold"), bg="#2e003e", fg=self.warna_utama, width=20).pack(side=tk.LEFT, padx=5)
+        tk.Label(header_frame, text="Skor Total", font=("Arial", 14, "bold"), bg="#2e003e", fg=self.warna_utama, width=15).pack(side=tk.LEFT, padx=5)
+
+        if not daftar:
+            empty_frame = tk.Frame(self.scrollable_frame, bg=self.warna_bg_list)
+            empty_frame.pack(fill=tk.BOTH, expand=True, pady=(self.winfo_screenheight()//4), padx=20)
+            tk.Label(
+                empty_frame,
+                text="Belum Ada Peserta",
+                fg="#2e003e",
+                bg=self.warna_bg_list,
+                font=("Arial", 20, "bold italic"),
+                justify=tk.CENTER,
+                wraplength=self.winfo_screenwidth()//3
+            ).pack(expand=True)
+            return
+
+        for idx, peserta in enumerate(daftar, 1):
+            frame_peserta = tk.Frame(self.scrollable_frame, bg=self.warna_utama, bd=2, relief=tk.RAISED, padx=10, pady=10)
+            frame_peserta.pack(fill=tk.X, pady=5, padx=10)
+
+            tk.Label(frame_peserta, text=str(idx), font=("Arial", 14), bg=self.warna_utama, fg="white", width=5).pack(side=tk.LEFT, padx=5)
+            tk.Label(frame_peserta, text=peserta.nama, font=("Arial", 14, "bold"), bg=self.warna_utama, fg="white", width=20, anchor="w").pack(side=tk.LEFT, padx=5)
+            skor_text = f"{peserta.skor}"
+            tk.Label(frame_peserta, text=skor_text, font=("Arial", 14), bg=self.warna_utama, fg="white", width=15).pack(side=tk.LEFT, padx=5)
+
+        spacer = tk.Frame(self.scrollable_frame, bg=self.warna_bg_list, height=50)
+        spacer.pack(fill=tk.X)
+
+    def daftar_peserta_gui(self):
+        ...
+
+    def tambah_skor_gui(self):
+        ...
+
+    def import_csv_gui(self):
+        ...
+
+    def ekspor_csv_gui(self):
+        ...
+
+    def urutkan_skor(self):
+        ...
+
+    def urutkan_id(self):
+        ...
+
+if __name__ == "__main__":
+    app = AplikasiKarate()
+    app.mainloop()
