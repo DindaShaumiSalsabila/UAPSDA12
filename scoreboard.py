@@ -53,4 +53,34 @@ class KarateScoreboard:
 
         note_label = tk.Label(score_frame, text="", font=("Arial", 18, "bold"), bg=color, fg="yellow")
         note_label.pack()
+        
+btn_frame = tk.Frame(score_frame, bg=color)
+        btn_frame.pack(pady=10)
+        tk.Button(btn_frame, text="+1", font=("Arial", 16), bg="green", fg="white", width=4,
+                  command=lambda: self.change_score(team, 1)).pack(side="left", padx=5)
+        tk.Button(btn_frame, text="-1", font=("Arial", 16), bg="red", fg="white", width=4,
+                  command=lambda: self.change_score(team, -1)).pack(side="left", padx=5)
 
+        flag_frame = tk.Frame(top_info, bg=color)
+        flag_frame.pack(side="left", padx=20)
+        try:
+            img_path = os.path.join("gambar", flag_filename)
+            flag_img = Image.open(img_path).resize((150, 150))
+            flag_photo = ImageTk.PhotoImage(flag_img)
+            flag_label = tk.Label(flag_frame, image=flag_photo, bg=color)
+            flag_label.image = flag_photo
+        except:
+            flag_label = tk.Label(flag_frame, text="Flag", font=("Arial", 18), bg=color, fg="white")
+        flag_label.pack()
+
+        timer_label = tk.Label(flag_frame, text="0:00", font=("Digital-7", 50), bg=color, fg="white")
+        timer_label.pack(pady=10)
+
+        if team == "ao":
+            self.ao_score_label = score_label
+            self.ao_timer_label = timer_label
+            self.ao_note_label = note_label
+        else:
+            self.aka_score_label = score_label
+            self.aka_timer_label = timer_label
+            self.aka_note_label = note_label
