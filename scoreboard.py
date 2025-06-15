@@ -63,4 +63,47 @@ class KarateScoreboard:
                   command=lambda: self.change_score(team, -1)).pack(side="left", padx=5)
 
         note_label = tk.Label(score_frame, text="", font=("Arial", 26, "bold"), bg=color, fg="yellow")
-        note_label.pack(pady=(10, 0))
+        note_label.pack(pady=(10, 0)) 
+
+flag_frame = tk.Frame(top_info, bg=color)
+        flag_frame.pack(side="left", expand=True, fill="both", padx=20)
+
+        try:
+            img_path = os.path.join("gambar", flag_filename)
+            flag_img = Image.open(img_path).resize((250, 250))
+            flag_photo = ImageTk.PhotoImage(flag_img)
+            flag_label = tk.Label(flag_frame, image=flag_photo, bg=color)
+            flag_label.image = flag_photo
+        except:
+            flag_label = tk.Label(flag_frame, text="Flag", font=("Arial", 18), bg=color, fg="white")
+        flag_label.pack()
+
+        timer_box = tk.Frame(flag_frame, bg="#2e2e2e", bd=3, relief="solid")
+        timer_box.pack(pady=20)
+        timer_label = tk.Label(timer_box, text="0.00", font=("Digital-7", 80), bg="#2e2e2e", fg="white")
+        timer_label.pack(padx=20, pady=10)
+
+        if team == "ao":
+            self.ao_score_label = score_label
+            self.ao_timer_label = timer_label
+            self.ao_note_label = note_label
+            self.ao_timer_box = timer_box
+        else:
+            self.aka_score_label = score_label
+            self.aka_timer_label = timer_label
+            self.aka_note_label = note_label
+            self.aka_timer_box = timer_box
+
+        control_frame = tk.Frame(frame, bg=color)
+        control_frame.pack(side="bottom", pady=10)
+
+        start_stop_btn = tk.Button(control_frame, text="Start", font=("Arial", 18), bg="green", fg="white", width=10)
+        start_stop_btn.pack(side="left", padx=5)
+        start_stop_btn.config(command=lambda btn=start_stop_btn: self.toggle_timer(team, btn))
+
+        tk.Button(control_frame, text="Show/Hide Timer", font=("Arial", 14), bg="blue", fg="white", width=14,
+                  command=lambda: self.toggle_timer_visibility(team)).pack(side="left", padx=5)
+        tk.Button(control_frame, text="Shikkaku", font=("Arial", 18), bg="gray", fg="black", width=10,
+                  command=lambda: self.shikkaku(team)).pack(side="left", padx=5)
+        tk.Button(control_frame, text="Kikken", font=("Arial", 18), bg="gray", fg="black", width=10,
+                  command=lambda: self.kikken(team)).pack(side="left", padx=5)
